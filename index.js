@@ -1,4 +1,4 @@
-const sequentialPromise = (fn) => {
+const sequencedPromise = (fn) => {
   let lastPromise = Promise.resolve()
   return (...args) => new Promise((resolve, reject) => {
     const _lastPromise = lastPromise
@@ -44,7 +44,7 @@ const delay = (time, msg = '') => new Promise((resolve, reject) => setTimeout(()
   if (msg.toString().startsWith('err')) return reject(new Error(msg))
   return resolve(msg)
 }, time))
-const consolePromise = sequentialPromise(delay)
+const consolePromise = sequencedPromise(delay)
 
 consolePromise(300, 1).then(console.log).catch((error) => console.log('error', error.message))
 consolePromise(200, 'err2').then(console.log).catch((error) => console.log('error', error.message))
